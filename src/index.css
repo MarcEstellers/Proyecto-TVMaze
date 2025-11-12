@@ -1,94 +1,68 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.container{
-  max-width: 1170px ;
-  margin: auto;
-}
-
-/*Navbar css*/
-
-.NavBar{
-  padding: 1rem;
-  background-color: rgb(44, 44, 44);
-}
-
-.NavBar__nav{
+  margin: 0;
   display: flex;
-  justify-content: space-around;
-  align-items:  center;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
-.marca a{
-  font-size: 4rem;
-  color:rgb(115, 255, 180);
-  text-decoration: none;
-  transition: color 0.5s ease;
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
-.marca a:hover{
-  color:rgb(5, 76, 243);
-}
-
-.Paginas{
-  display: flex;
-  list-style: none;
-  align-items: center;
-}
-
-.Paginas li a{
-  display: block;
-  padding: 1rem;
-  font-size: 2rem;
-  color:rgb(115, 255, 180);
-  text-decoration: none;
-  margin-left: 2rem;
-  transition: color 0.5s ease;
-}
-
-.Paginas li a:hover{
-  color:rgb(5, 76, 243);
-  border-bottom:1px solid rgb(5, 76, 243);
-}
-
-/*estilo cdd del buscador*/
-
-.BarraBusq{
-  width: 100%;
-  margin:2rem 0;
-}
-
-.form1 > input{
-  width: 100%;
-  padding: 10px 17px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* efecto glow suave */
-  border: none;   
-  border-radius: 10px;/*sin esquinas*/
-  font-size: 20px;
-  outline-width: 0ch;
-}
-
-.botonBusqueda{
-  padding: 10px 17px;
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: black;
-  color: rgb(255, 255, 255);
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
   cursor: pointer;
-  margin: 1rem 0;
-  font-size: 20px;
-  display: block;
-  width: 100%;
+  transition: border-color 0.25s;
 }
-.botonBusqueda:hover{
-
-  border: 1px solid rgb(255, 255, 255);
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
