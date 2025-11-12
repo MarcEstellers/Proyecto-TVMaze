@@ -1,6 +1,7 @@
 *{
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -55,5 +56,39 @@ body {
 .Paginas li a:hover{
   color:rgb(5, 76, 243);
   border-bottom:1px solid rgb(5, 76, 243);
+}
+
+/*estilo cdd del buscador*/
+
+.BarraBusq{
+  width: 100%;
+  margin:2rem 0;
+}
+
+.form1 > input{
+  width: 100%;
+  padding: 10px 17px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* efecto glow suave */
+  border: none;   
+  border-radius: 10px;/*sin esquinas*/
+  font-size: 20px;
+  outline-width: 0ch;
+}
+
+.botonBusqueda{
+  padding: 10px 17px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: black;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  margin: 1rem 0;
+  font-size: 20px;
+  display: block;
+  width: 100%;
+}
+.botonBusqueda:hover{
+
+  border: 1px solid rgb(255, 255, 255);
 }
 
