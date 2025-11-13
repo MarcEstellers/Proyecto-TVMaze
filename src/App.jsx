@@ -1,105 +1,107 @@
 import { useEffect, useState } from "react";
-import SearchBar from "./components/SearchBar";
-import ShowList from "./components/ShowList";
-import ShowModal from "./components/ShowModal";
+import BarraBusqueda from "./components/BarraBusqueda";
+import ListaSeries from "./components/ListaSeries";
+import ModalSerie from "./components/ModalSerie";
 
-const API_URL = "https://api.tvmaze.com/search/shows?q=";
+const URL_API = "https://api.tvmaze.com/search/shows?q=";
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-  const [selectedShow, setSelectedShow] = useState(null);
+  const [consulta, setConsulta] = useState("");
+  const [resultados, setResultados] = useState([]);
+  const [favoritos, setFavoritos] = useState([]);
+  const [serieSeleccionada, setSerieSeleccionada] = useState(null);
 
   // Cargar favoritos al arrancar
   useEffect(() => {
-    const stored = localStorage.getItem("favorites");
-    if (stored) {
-      setFavorites(JSON.parse(stored));
+    const almacenados = localStorage.getItem("favoritos");
+    if (almacenados) {
+      setFavoritos(JSON.parse(almacenados));
     }
   }, []);
 
   // Guardar favoritos cuando cambian
   useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }, [favoritos]);
 
-  const handleSearch = async () => {
-    if (!query.trim()) return;
+  const buscarSeries = async () => {
+    if (!consulta.trim()) return;
     try {
-      const res = await fetch(`${API_URL}${encodeURIComponent(query)}`);
-      const data = await res.json();
-      const shows = data.map((item) => item.show);
-      setResults(shows);
-    } catch (err) {
-      console.error("Error al buscar:", err);
+      const respuesta = await fetch(
+        `${URL_API}${encodeURIComponent(consulta)}`
+      );
+      const datos = await respuesta.json();
+      const series = datos.map((item) => item.show);
+      setResultados(series);
+    } catch (error) {
+      console.error("Error al buscar:", error);
     }
   };
 
-  const isFavorite = (show) =>
-    favorites.some((fav) => fav.id === show.id);
+  const esFavorito = (serie) =>
+    favoritos.some((favorito) => favorito.id === serie.id);
 
-  const toggleFavorite = (show) => {
-    setFavorites((prev) => {
-      if (prev.some((fav) => fav.id === show.id)) {
-        return prev.filter((fav) => fav.id !== show.id);
+  const alternarFavorito = (serie) => {
+    setFavoritos((favoritosPrevios) => {
+      if (favoritosPrevios.some((fav) => fav.id === serie.id)) {
+        return favoritosPrevios.filter((fav) => fav.id !== serie.id);
       }
-      return [...prev, show];
+      return [...favoritosPrevios, serie];
     });
   };
 
-  const openModal = (show) => setSelectedShow(show);
-  const closeModal = () => setSelectedShow(null);
+  const abrirModal = (serie) => setSerieSeleccionada(serie);
+  const cerrarModal = () => setSerieSeleccionada(null);
 
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Buscador de series (TVMaze)</h1>
+        <h1>EstellersFlixs:</h1>
       </header>
 
       <main className="app-main">
-        <SearchBar
-          query={query}
-          setQuery={setQuery}
-          onSearch={handleSearch}
+        <BarraBusqueda
+          consulta={consulta}
+          setConsulta={setConsulta}
+          alBuscar={buscarSeries}
         />
 
         <section className="section">
           <h2>Resultados</h2>
-          {results.length === 0 && (
+          {resultados.length === 0 && (
             <p className="text-muted">
               Haz una búsqueda para ver series.
             </p>
           )}
-          <ShowList
-            shows={results}
-            onSelectShow={openModal}
-            onToggleFavorite={toggleFavorite}
-            isFavorite={isFavorite}
+          <ListaSeries
+            series={resultados}
+            alSeleccionarSerie={abrirModal}
+            alAlternarFavorito={alternarFavorito}
+            esFavorito={esFavorito}
           />
         </section>
 
         <section className="section">
           <h2>Favoritos</h2>
-          {favorites.length === 0 && (
+          {favoritos.length === 0 && (
             <p className="text-muted">
               Todavía no has añadido series a favoritos.
             </p>
           )}
-          <ShowList
-            shows={favorites}
-            onSelectShow={openModal}
-            onToggleFavorite={toggleFavorite}
-            isFavorite={isFavorite}
+          <ListaSeries
+            series={favoritos}
+            alSeleccionarSerie={abrirModal}
+            alAlternarFavorito={alternarFavorito}
+            esFavorito={esFavorito}
           />
         </section>
       </main>
 
-      <ShowModal
-        show={selectedShow}
-        onClose={closeModal}
-        isFavorite={isFavorite}
-        onToggleFavorite={toggleFavorite}
+      <ModalSerie
+        serie={serieSeleccionada}
+        alCerrar={cerrarModal}
+        esFavorito={esFavorito}
+        alAlternarFavorito={alternarFavorito}
       />
     </div>
   );
